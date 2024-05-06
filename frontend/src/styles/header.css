@@ -1,0 +1,10 @@
+.customHeader {
+    height: auto;
+    width: 40em;
+    border: solid;
+    display: grid;
+    grid-template-columns: repeat(7,1fr); 
+    
+
+}
+

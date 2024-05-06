@@ -1,0 +1,14 @@
+.profile {
+    background-color: rgb(255, 255, 255);
+    height: 2rem;
+    width: 25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position:absolute;
+    right: 2rem;
+}
+
+.profile button {
+    color: rebeccapurple;
+}

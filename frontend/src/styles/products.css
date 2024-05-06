@@ -1,0 +1,25 @@
+.products {
+    width: auto;
+    height: auto;
+    border: solid;
+    position: relative;
+    top: 2em;
+    left: 1em;
+    display: grid;
+    grid-template-columns: repeat(4,23%); 
+
+}
+
+.products div {
+    background-color: rgb(255, 255, 255);
+    border: solid;
+    height: 100%;
+    width: 20rem;
+    font-size: 1rem;
+    margin:1rem;
+}
+
+.products img {
+    height: 5em;
+    width: 5em;
+}

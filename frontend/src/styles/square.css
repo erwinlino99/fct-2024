@@ -1,0 +1,22 @@
+.title{
+    font-size: 20px;
+    background-color: rgb(209, 209, 209);
+    height: 2em;
+    width: auto;
+    border: solid;
+    margin: 2px;
+}
+
+.titleSelected{
+    border: solid;
+    font-size: 20px;
+    background-color: rgb(94, 255, 0);
+    height: 2em;
+    width: 4em;   margin: 2px;
+    
+}
+
+.title p{
+    color: rgb(22, 18, 18);
+    text-align: center;
+}
