@@ -4,9 +4,6 @@ import { Typography, Button } from "@mui/material";
 
 export const Box = ({ routeImg, name, description, price }) => {
 
-  useEffect(()=>{
-    console.log('Producto agregado a favoritos');
-  } )
 
 
   return (
