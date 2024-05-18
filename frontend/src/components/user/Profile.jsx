@@ -17,12 +17,17 @@ const Profile = () => {
         </Button>
       </Link>
 
-      <Button>
-        <SvgIcon component={HeartIcon} fontSize="small" /> Favoritos
-      </Button>
-      <Button>
-        <SvgIcon component={ShoppingIcon} fontSize="small" /> Carrito
-      </Button>
+      <Link to="/favourites">
+        <Button>
+          <SvgIcon component={HeartIcon} fontSize="small" /> Favoritos
+        </Button>
+      </Link>
+
+      <Link to="/cart">
+        <Button>
+          <SvgIcon component={ShoppingIcon} fontSize="small" /> Carrito
+        </Button>
+      </Link>
     </div>
   );
 };

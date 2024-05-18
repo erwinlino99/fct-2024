@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../styles/header.css";
 import "../styles/square.css";
 import menProducts from "../data/men.json";
-import { Square } from "./Square";
+import { Button, Typography } from "@mui/material";
+import "../styles/header.css";
 
 const information = {
   men: "Hombre",
@@ -15,30 +16,31 @@ const information = {
 };
 
 function Header() {
-  //* HOOKS -->
   const [selectedSquare, setSelectedSquare] = useState(null);
 
-  //*-----------------
-  const bringProducts = () => {
-    return new Promise((resolve, reject) => {
-      resolve(menProducts);
-    });
-  };
+  // const bringProducts = () => {
+  //   return new Promise((resolve, reject) => {
+  //     resolve(menProducts);
+  //     console.log(menProducts)
+  //   });
+  // };
 
-  const handleClick = (index, info) => {
+  const handleClick = (index) => {
     setSelectedSquare(index);
-    console.log(`Informacion de : ${info}`);
   };
 
   return (
     <header className="customHeader">
       {Object.keys(information).map((key, index) => (
-        <Square
-          key={index}
-          customStyle={selectedSquare === index ? "titleSelected" : "title"}
-          upgradeEvent={() => handleClick(index, information[key])}
-          info={information[key]}
-        />
+        <Button variant="contained">
+          <div
+            key={index}
+            customStyle={selectedSquare === index ? "titleSelected" : "title"}
+            upgradeEvent={() => handleClick(index, information[key])}
+          >
+            <Typography>{information[key]}</Typography>
+          </div>
+        </Button>
       ))}
     </header>
   );

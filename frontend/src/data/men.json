@@ -1,86 +1,99 @@
 [
-  {
-      "id": "ABCD",
-      "img": "https://example.com/image1.jpg",
-      "name": "Camiseta de algodón",
-      "description": "Camiseta de algodón suave y cómoda en varios colores.",
-      "price": 19.99
-  },
-  {
-      "id": "EFGH",
-      "img": "https://example.com/image2.jpg",
-      "name": "Pantalones vaqueros ajustados",
-      "description": "Pantalones vaqueros ajustados de mezclilla de alta calidad.",
-      "price": 29.99
-  },
-  {
-      "id": "IJKL",
-      "img": "https://example.com/image3.jpg",
-      "name": "Chaqueta de cuero",
-      "description": "Chaqueta de cuero genuino con forro suave y cremallera frontal.",
-      "price": 79.99
-  },
-  {
-      "id": "MNOP",
-      "img": "https://example.com/image4.jpg",
-      "name": "Zapatillas deportivas",
-      "description": "Zapatillas deportivas ligeras y transpirables para correr o entrenar.",
-      "price": 49.99
-  },
-  {
-      "id": "QRST",
-      "img": "https://example.com/image5.jpg",
-      "name": "Sudadera con capucha",
-      "description": "Sudadera con capucha de algodón cálido y confortable.",
-      "price": 39.99
-  },
-  {
-      "id": "UVWX",
-      "img": "https://example.com/image6.jpg",
-      "name": "Jeans clásicos",
-      "description": "Jeans clásicos de corte recto y lavado vintage.",
-      "price": 59.99
-  },
-  {
-      "id": "YZAB",
-      "img": "https://example.com/image7.jpg",
-      "name": "Chaleco acolchado",
-      "description": "Chaleco acolchado ligero y repelente al agua.",
-      "price": 34.99
-  },
-  {
-      "id": "CDEF",
-      "img": "https://example.com/image8.jpg",
-      "name": "Gorra de béisbol",
-      "description": "Gorra de béisbol ajustable con logo bordado.",
-      "price": 14.99
-  },
-  {
-      "id": "GHIJ",
-      "img": "https://example.com/image9.jpg",
-      "name": "Cinturón de cuero",
-      "description": "Cinturón de cuero genuino con hebilla metálica.",
-      "price": 24.99
-  },
-  {
-      "id": "KLMN",
-      "img": "https://example.com/image10.jpg",
-      "name": "Calcetines deportivos",
-      "description": "Calcetines deportivos de algodón transpirable.",
-      "price": 9.99
-  },
-  {
-      "id": "OPQR",
-      "img": "https://example.com/image11.jpg",
-      "name": "Polo clásico",
-      "description": "Polo de algodón piqué con cuello y botones.",
-      "price": 29.99
-  },
-  {
-      "id": "STUV",
-      "img": "https://example.com/image12.jpg",
-      "name": "Mochila resistente",
-      "description": "Mochila resistente con compartimento acolchado para laptop.",
-      "price": 59.99
-  }
-]
+    {
+        "id": "ABCD",
+        "img": "https://example.com/image1.jpg",
+        "name": "Los PEPES",
+        "description": "Camiseta de algodón suave y cómoda en varios colores.",
+        "price": 19.99,
+        "category": "Hombre"
+    },
+    {
+        "id": "EFGH",
+        "img": "https://example.com/image2.jpg",
+        "name": "Pantalones vaqueros ajustados",
+        "description": "Pantalones vaqueros ajustados de mezclilla de alta calidad.",
+        "price": 29.99,
+        "category": "Hombre"
+    },
+    {
+        "id": "IJKL",
+        "img": "https://example.com/image3.jpg",
+        "name": "Chaqueta de cuero",
+        "description": "Chaqueta de cuero genuino con forro suave y cremallera frontal.",
+        "price": 79.99,
+        "category": "Hombre"
+    },
+    {
+        "id": "MNOP",
+        "img": "https://example.com/image4.jpg",
+        "name": "Zapatillas deportivas",
+        "description": "Zapatillas deportivas ligeras y transpirables para correr o entrenar.",
+        "price": 49.99,
+        "category": "Mujer"
+    },
+    {
+        "id": "QRST",
+        "img": "https://example.com/image5.jpg",
+        "name": "Sudadera con capucha",
+        "description": "Sudadera con capucha de algodón cálido y confortable.",
+        "price": 39.99,
+        "category": "Mujer"
+    },
+    {
+        "id": "UVWX",
+        "img": "https://example.com/image6.jpg",
+        "name": "Jeans clásicos",
+        "description": "Jeans clásicos de corte recto y lavado vintage.",
+        "price": 59.99,
+        "category": "Niñas"
+    },
+    {
+        "id": "YZAB",
+        "img": "https://example.com/image7.jpg",
+        "name": "Chaleco acolchado",
+        "description": "Chaleco acolchado ligero y repelente al agua.",
+        "price": 34.99,
+        "category": "Niñas"
+    },
+    {
+        "id": "CDEF",
+        "img": "https://example.com/image8.jpg",
+        "name": "Gorra de béisbol",
+        "description": "Gorra de béisbol ajustable con logo bordado.",
+        "price": 14.99,
+        "category": "Niñas"
+    },
+    {
+        "id": "GHIJ",
+        "img": "https://example.com/image9.jpg",
+        "name": "Cinturón de cuero",
+        "description": "Cinturón de cuero genuino con hebilla metálica.",
+        "price": 24.99,
+        "category": "Ofertas"
+    },
+    {
+        "id": "KLMN",
+        "img": "https://example.com/image10.jpg",
+        "name": "Calcetines deportivos",
+        "description": "Calcetines deportivos de algodón transpirable.",
+        "price": 9.99,
+        "category": "Ofertas"
+    },
+    {
+        "id": "OPQR",
+        "img": "https://example.com/image11.jpg",
+        "name": "Polo clásico",
+        "description": "Polo de algodón piqué con cuello y botones.",
+        "price": 29.99,
+        "category": "Equipamiento"
+    },
+    {
+        "id": "STUV",
+        "img": "https://example.com/image12.jpg",
+        "name": "Mochila resistente",
+        "description": "Mochila resistente con compartimento acolchado para laptop.",
+        "price": 59.99,
+        "category": "Equipamiento"
+    }
+  ]
+  

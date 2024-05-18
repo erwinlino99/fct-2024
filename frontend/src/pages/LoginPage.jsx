@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Typography, Button, TextField, Container } from "@mui/material";
-
 const LoginPage = () => {
+
+  const [user,setUser]=useState(null);
+  const [pass,setPass]=useState(null);
+  const [good,setGood]=useState("NO HAY CONEXION");
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
 
+  const checkUser=()=>{
+
+  }
+
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" style={{border:'solid'}}>
       <div className="login-container">
         <Typography variant="h4" component="h1" gutterBottom>
           Iniciar Sesión
@@ -29,13 +38,11 @@ const LoginPage = () => {
             fullWidth
             margin="normal"
           />
-          <Button type="submit" variant="contained" color="primary">
+          <Button type="submit" variant="contained" color="primary" onClick={checkUser}>
             Iniciar Sesión
           </Button>
         </form>
-        <Typography variant="body1" className="register-link">
-          ¿No tienes una cuenta? <Link to="/register">Regístrate aquí</Link>
-        </Typography>
+     
       </div>
     </Container>
   );
