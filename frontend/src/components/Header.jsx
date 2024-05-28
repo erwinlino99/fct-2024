@@ -32,14 +32,14 @@ function Header() {
   return (
     <header className="customHeader">
       {Object.keys(information).map((key, index) => (
-        <Button variant="contained">
-          <div
-            key={index}
-            customStyle={selectedSquare === index ? "titleSelected" : "title"}
-            upgradeEvent={() => handleClick(index, information[key])}
-          >
+        <Button
+          key={index} // Mueve la key aquí
+          variant="contained"
+          onClick={() => handleClick(index)}
+        >
+          {/* <div className={selectedSquare === index ? "titleSelected" : "title"}> */}
             <Typography>{information[key]}</Typography>
-          </div>
+          {/* </div> */}
         </Button>
       ))}
     </header>

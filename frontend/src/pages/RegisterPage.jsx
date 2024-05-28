@@ -1,36 +1,38 @@
 import React, { useState } from "react";
 import { Typography, Button, TextField, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { Divider } from "@mui/material";
-const LoginPage = () => {
+import {Divider} from "@mui/material";
+const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(""); // Nuevo estado para el correo electrónico
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://127.0.0.1:5000/users");
-      const data = await response.json();
-
-      const userExists = data.some((user) => {
-        return user.username === username && user.password_hash === password;
+      const response = await fetch("http://127.0.0.1:5000/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          password_hash: password,
+          email: email,
+        }),
       });
 
-      if (userExists) {
-        console.log("Inicio de sesión exitoso");
-        localStorage.setItem("username", username);
-        window.location.href = "/";
+      if (response.ok) {
+        console.log("Usuario registrado exitosamente:", username, email);
+        navigate("/login");
       } else {
-        alert("Nombre de usuario o contraseña incorrectos");
+        const errorData = await response.json();
+        console.error("Error al registrar al usuario:", errorData.message);
       }
     } catch (error) {
-      console.error("Error al obtener los datos de la API", error);
+      console.error("Error al registrar al usuario:", error);
     }
-  };
-
-  const goRegister = () => {
-    navigate("/register");
   };
 
   return (
@@ -38,13 +40,13 @@ const LoginPage = () => {
       maxWidth="sm"
       style={{
         backgroundColor: "#D7DED8",
-        height: "22rem",
+        height: "25rem",
         marginTop: "10rem",
       }}
     >
-      <div>
-        <Typography variant="h3" component="h1" gutterBottom>
-          Iniciar Sesión
+      <div className="register-container">
+        <Typography variant="h4" component="h1" gutterBottom>
+          Registro de Usuario
         </Typography>
         <form onSubmit={handleSubmit}>
           <TextField
@@ -68,22 +70,34 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
             style={{ backgroundColor: "white" }}
           />
+          <TextField
+            id="email"
+            label="Correo electrónico"
+            type="email"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={{ backgroundColor: "white" }}
+          />
           <Button type="submit" variant="contained" color="success">
-            Iniciar Sesión
+            Registrarse
           </Button>
         </form>
-        <Divider style={{ marginTop: "0.5rem", marginBottom: "0.5rem" }} />
+
+        <Divider style={{marginTop:'0.5rem',marginBottom:'0.5rem'}}/>
         <Button
-          type="submit"
           variant="contained"
           color="warning"
-          onClick={goRegister}
+          onClick={() => navigate("/login")}
+          style={{marginTop:'0.5rem'}}
         >
-          ¿No tienes cuenta? Registrate Ahora
+          ¿Ya tienes una cuenta? Inicia sesión
         </Button>
       </div>
     </Container>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

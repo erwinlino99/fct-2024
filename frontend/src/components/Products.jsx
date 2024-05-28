@@ -4,20 +4,38 @@ import allProducts from "../data/men.json";
 import img from "../img/1.png";
 import { Button, Typography } from "@mui/material";
 import "../styles/products.css";
+import HeartIcon from "@mui/icons-material/FavoriteOutlined";
+
+const response = await fetch("http://127.0.0.1:5000/products");
+const data = await response.json();
+
+const addFavorites = (prod) => {
+  console.log(prod);
+  //const response=await fetch('http://127.0.0.1:5000/products');
+};
 
 const Products = () => {
-  console.log(allProducts);
+  //(allProducts);
   return (
     <div className="products">
-      {allProducts.map((prod) => (
+      {data.map((prod) => (
         <div className="product" key={prod.id}>
+          <HeartIcon />
           <img src={img} alt={prod.name} className="product-image" />
           <Typography className="product-name">{prod.name}</Typography>
           <Typography className="product-description">
             {prod.description}
           </Typography>
           <Typography className="product-price">{prod.price}€</Typography>
-          <Button variant="contained">Comprar</Button>
+          <Button variant="contained">Agregar al carrito</Button>
+          <Button
+            variant="contained"
+            onClick={() => {
+              console.log(JSON.stringify(prod));
+            }}
+          >
+            Añadir a favoritos
+          </Button>
         </div>
       ))}
     </div>

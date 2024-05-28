@@ -1,4 +1,5 @@
-body{
-    background-image: url(background.jpg) ;
+body {
+    background-image: url(darkBackground.jpg);
     background-position: center;
+    background-attachment: fixed; 
 }
