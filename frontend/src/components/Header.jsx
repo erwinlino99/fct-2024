@@ -1,49 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { Button, Typography } from "@mui/material";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/header.css";
 import "../styles/square.css";
-import menProducts from "../data/men.json";
-import { Button, Typography } from "@mui/material";
-import "../styles/header.css";
 
-const information = {
-  men: "Hombre",
-  women: "Mujer",
-  girls: "Niñas",
-  boys: "Niños",
-  offers: "Ofertas",
-  equipment: "Equipamiento",
-  brands: "Marcas",
-};
+const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
 
-function Header() {
-  const [selectedSquare, setSelectedSquare] = useState(null);
-
-  // const bringProducts = () => {
-  //   return new Promise((resolve, reject) => {
-  //     resolve(menProducts);
-  //     console.log(menProducts)
-  //   });
-  // };
-
-  const handleClick = (index) => {
-    setSelectedSquare(index);
-  };
+  const pages = [
+    { information: 'Inicio', location: '/' },
+    { information: 'Hombre', location: '/hombre' },
+    { information: 'Mujer', location: '/mujer' },
+    { information: 'Niñas', location: '/girls' },
+    { information: 'Niños', location: '/boys' },
+    { information: 'Ofertas', location: '/ofertas' },
+    { information: 'Equipamiento', location: '/equipamiento' },
+    { information: 'Marcas', location: '/marcas' },
+  ];
 
   return (
     <header className="customHeader">
-      {Object.keys(information).map((key, index) => (
+      {pages.map((page, index) => (
         <Button
-          key={index} // Mueve la key aquí
+          key={index}
           variant="contained"
-          onClick={() => handleClick(index)}
+          color={location.pathname === page.location ? "success" : "primary"}
+          onClick={() => navigate(page.location)}
         >
-          {/* <div className={selectedSquare === index ? "titleSelected" : "title"}> */}
-            <Typography>{information[key]}</Typography>
-          {/* </div> */}
+          <Typography>{page.information}</Typography>
         </Button>
       ))}
     </header>
   );
-}
+};
 
 export default Header;

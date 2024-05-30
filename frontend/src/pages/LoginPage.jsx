@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Divider } from "@mui/material";
 const LoginPage = () => {
   const [username, setUsername] = useState("");
+  const [userId, serUserId] = useState("");
+
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
@@ -12,15 +14,18 @@ const LoginPage = () => {
     try {
       const response = await fetch("http://127.0.0.1:5000/users");
       const data = await response.json();
-
-      const userExists = data.some((user) => {
+      console.log(data);
+  
+      const user = data.find((user) => {
         return user.username === username && user.password_hash === password;
       });
-
-      if (userExists) {
-        console.log("Inicio de sesión exitoso");
-        localStorage.setItem("username", username);
+  
+      if (user) {
+        console.log('---->',user)
+        localStorage.setItem("userId", user.id);
+        localStorage.setItem("username", user.username);
         window.location.href = "/";
+
       } else {
         alert("Nombre de usuario o contraseña incorrectos");
       }
@@ -28,6 +33,7 @@ const LoginPage = () => {
       console.error("Error al obtener los datos de la API", error);
     }
   };
+  
 
   const goRegister = () => {
     navigate("/register");

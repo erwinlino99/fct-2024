@@ -13,8 +13,6 @@ def index():
     return "API DE ERWIN"
 # PARA USUARIOS -->
 # PARA USUARIOS -->
-# PARA USUARIOS -->
-
 @app.route('/users',methods=['GET'])
 def listUsers():
     try:
@@ -38,11 +36,12 @@ def get_user(id):
         return jsonify(user)
     except Exception as e:
         return str(e)
-
+# REGISTRO DE USUARIO -->
+# REVISION : FALTA HACER EL METODO DE MODIFICAR USUARIO, CONTRASEÑA ETC
 @app.route('/users', methods=['POST'])
 def add_user():
     try:
-        attribute = '{}'
+        attribute = '[]'
         user_data = request.json
         cursor = connection.connection.cursor()
         sql = "INSERT INTO users (username, password_hash, email, wishlist, cart) VALUES (%s, %s, %s, %s, %s)"
@@ -53,19 +52,10 @@ def add_user():
     except Exception as e:
         return str(e)
 
-
-# REVISION : FALTA HACER EL METODO DE MODIFICAR USUARIO, CONTRASEÑA ETC
-
-
-
 # PARA LA LISTA DE DESEADOS/FAVORITOS --->
 # PARA LA LISTA DE DESEADOS/FAVORITOS --->
-# PARA LA LISTA DE DESEADOS/FAVORITOS --->
-
-import json
-
 @app.route('/wishlist/<int:id>', methods=['GET'])
-def bringWishList(id):
+def bringWishlist(id):
     try:
         cursor = connection.connection.cursor()
         sql = f"SELECT wishlist FROM users WHERE id = {id}"
@@ -80,47 +70,21 @@ def bringWishList(id):
         return str(e)
 
     
-    
-#  REVISION: VER COMO HACER ESTO ---->    
-import json
-
-@app.route('/wishlist/<int:id>', methods=['POST'])
-def addToWishList(id):
+@app.route('/wishlist/<int:id>', methods=['PUT'])
+def updateWishlist(id):
     try:
-        item = request.json  # Obtener el elemento de la solicitud JSON
+        # Aqui recibo los datos del Fronted
+        frontend_data = request.json
+        # Lo convertimos de formato Json a String para luego meterlo en el campo deseado
+        frontend_data_str = json.dumps(frontend_data)
         cursor = connection.connection.cursor()
-        # Obtener la lista de deseos actual del usuario
-        cursor.execute(f"SELECT wishlist FROM users WHERE id = {id}")
-        current_wishlist = cursor.fetchone()[0]
-        # Convertir la lista de deseos actual a una lista de Python
-        wishlist_list = json.loads(current_wishlist) if current_wishlist else []
-        # Agregar el nuevo elemento a la lista de deseos
-        wishlist_list.append(item)
-        # Actualizar la lista de deseos en la base de datos
-        cursor.execute("UPDATE users SET wishlist = %s WHERE id = %s", (json.dumps(wishlist_list), id))
+        sql = f"UPDATE USERS SET WISHLIST = %s WHERE id = %s"
+        # Ejecutar la consulta SQL con los datos proporcionados desde el frontend y el ID de usuario
+        cursor.execute(sql, (frontend_data_str, id))
         connection.connection.commit()
-        cursor.close()
-        return "Elemento agregado a la lista de deseos correctamente."
+        return 'Lista de deseos actualizada correctamente',200
     except Exception as e:
         return str(e)
-
-    
-@app.route('/wishlist/<int:id>/<int:index>', methods=['DELETE'])
-def removeFromWishList(id, index):
-    try:
-        cursor = connection.connection.cursor()
-        # Construir y ejecutar la consulta SQL de actualización para eliminar el elemento de la lista de deseos
-        sql = f"UPDATE users SET wishlist = JSON_REMOVE(wishlist, CONCAT('$[', %s, ']')) WHERE id = %s"
-        cursor.execute(sql, (index, id))
-        # Confirmar la acción de que se ha actualizado la lista de deseos
-        connection.connection.commit()
-        cursor.close()
-        return "Elemento eliminado de la lista de deseos correctamente."
-    except Exception as e:
-        return str(e)
-
-
-# PARA PRODUCTOS --->
 # PARA PRODUCTOS --->
 # PARA PRODUCTOS --->
 
@@ -165,7 +129,6 @@ def addProduct():
         return "Productor registrado correctamente"
     except Exception as e:
         return str(e)
-
 
 # HAY QUE VERIFICAR QUE ESE PRODUCTO EXISTE -->
 @app.route('/products/<int:id>', methods=['DELETE'])

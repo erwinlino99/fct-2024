@@ -23,11 +23,16 @@ const Profile = () => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+    window.location.href = "/";
   };
 
   const handleLogout = () => {
     localStorage.removeItem('username');
+    localStorage.removeItem('userId');
+
     setUsername(null);
+    setUsername(null);
+
     handleMenuClose();
     window.location.href = "/";
   };
