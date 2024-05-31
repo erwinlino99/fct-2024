@@ -85,6 +85,24 @@ def updateWishlist(id):
         return 'Lista de deseos actualizada correctamente',200
     except Exception as e:
         return str(e)
+# PARA LA LISTA DE CARRITO --->
+# PARA LA LISTA DE CARRITO --->
+@app.route('/cart/<int:id>', methods=['GET'])
+def bringCart(id):
+    try:
+        cursor = connection.connection.cursor()
+        sql = f"SELECT cart FROM users WHERE id = {id}"
+        cursor.execute(sql)
+        result = cursor.fetchone()
+        if result:
+            wishlist = json.loads(result[0])  # Convertir la cadena JSON en una lista de Python
+            return jsonify(wishlist)
+        else:
+            return "Usuario no encontrado"
+    except Exception as e:
+        return str(e)
+    
+    
 # PARA PRODUCTOS --->
 # PARA PRODUCTOS --->
 

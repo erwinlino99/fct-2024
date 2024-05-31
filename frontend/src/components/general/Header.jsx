@@ -1,22 +1,22 @@
 import React from "react";
 import { Button, Typography } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
-import "../styles/header.css";
-import "../styles/square.css";
+import "../../styles/header.css";
+import "../../styles/square.css";
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const pages = [
-    { information: 'Inicio', location: '/' },
-    { information: 'Hombre', location: '/hombre' },
-    { information: 'Mujer', location: '/mujer' },
-    { information: 'Niñas', location: '/girls' },
-    { information: 'Niños', location: '/boys' },
-    { information: 'Ofertas', location: '/ofertas' },
-    { information: 'Equipamiento', location: '/equipamiento' },
-    { information: 'Marcas', location: '/marcas' },
+    { information: "Inicio", location: "/" },
+    { information: "Hombre", location: "/hombre" },
+    { information: "Mujer", location: "/mujer" },
+    { information: "Niñas", location: "/girls" },
+    { information: "Niños", location: "/boys" },
+    { information: "Ofertas", location: "/ofertas" },
+    { information: "Equipamiento", location: "/equipamiento" },
+    { information: "Marcas", location: "/marcas" },
   ];
 
   return (

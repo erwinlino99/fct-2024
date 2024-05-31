@@ -23,17 +23,14 @@ const Profile = () => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-    window.location.href = "/";
+    window.location.href = "/profile";
   };
 
   const handleLogout = () => {
     localStorage.removeItem('username');
     localStorage.removeItem('userId');
-
     setUsername(null);
     setUsername(null);
-
-    handleMenuClose();
     window.location.href = "/";
   };
 

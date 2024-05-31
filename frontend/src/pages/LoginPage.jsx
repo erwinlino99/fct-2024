@@ -21,7 +21,8 @@ const LoginPage = () => {
       });
   
       if (user) {
-        console.log('---->',user)
+        console.log('el usuario es : -------->>',user)
+        localStorage.setItem('userJSON',JSON.stringify(user))
         localStorage.setItem("userId", user.id);
         localStorage.setItem("username", user.username);
         window.location.href = "/";

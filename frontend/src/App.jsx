@@ -1,6 +1,6 @@
 // App.js
 import React from "react";
-import Header from "./components/Header";
+import Header from "./components/general/Header";
 import Products from "./components/Products";
 import Profile from "./components/user/Profile";
 import LoginPage from "./pages/LoginPage";
@@ -9,6 +9,8 @@ import Cart from "./components/user/Cart";
 import Favourite from "./components/user/Favourite";
 import { useEffect, useState } from "react";
 import RegisterPage from "./pages/RegisterPage";
+import CustomProfile from "./components/user/CustomProfile";
+import DetailsProducts from "./components/DetailsProduct";
 
 function App() {
   const [username, setUsername] = useState(null);
@@ -32,12 +34,15 @@ function App() {
         <Header />
         <Profile />
         <Routes>
+
           {!username && <Route path="/login" element={<LoginPage />} />}
           <Route path="/" element={<Products />} />
-          <Route path="/:type" element={<Products />} />
+          <Route path="/:category" element={<Products />} />
+          <Route path="/products/:id" element={<DetailsProducts  />} />
           <Route path="/favourites" element={<Favourite />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/profile" element={<CustomProfile />} />
+      
         </Routes>
       </BrowserRouter>
     </div>
