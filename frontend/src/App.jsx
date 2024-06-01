@@ -12,6 +12,7 @@ import RegisterPage from "./pages/RegisterPage";
 import CustomProfile from "./components/user/CustomProfile";
 import DetailsProducts from "./components/DetailsProduct";
 import CheckPayment from "./components/buy/CheckPayment";
+import SelectCategory from "./components/general/SelectCategory";
 function App() {
   const [username, setUsername] = useState(null);
   const [userId, setUserId] = useState(null);
@@ -31,14 +32,14 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Header />
         <Profile />
+        <Header />
         <Routes>
-
           {!username && <Route path="/login" element={<LoginPage />} />}
-          <Route path="/" element={<Products />} />
+          <Route path="/" element={<SelectCategory />} />
           <Route path="/:category" element={<Products />} />
-          <Route path="/products/:id" element={<DetailsProducts  />} />
+          <Route path="/test" element={<Products />} />
+          <Route path="/products/:id" element={<DetailsProducts />} />
           <Route path="/favourites" element={<Favourite />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/profile" element={<CustomProfile />} />

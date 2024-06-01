@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
-import img from "../img/2.jpg";
 import { Button, Typography } from "@mui/material";
-import "../styles/products.css";
 import HeartIcon from "@mui/icons-material/FavoriteOutlined";
 import { useParams, useNavigate } from "react-router-dom";
-import imagesPath from "../img/images.js"; // Importa el archivo path.js
-
+import imagesPath from "../img/images.jsx"; // Importa el archivo path.js
 
 const Products = () => {
   const navigate = useNavigate();
@@ -121,22 +118,57 @@ const Products = () => {
   }, [category, products]);
 
   return (
-    <div className="products">
+    <div
+      style={{
+        marginTop:'2rem',
+        width: "auto",
+        height: "auto",
+        display: "grid",
+        gridTemplateColumns: "repeat(4, 23%)",
+      }}
+    >
       {filterProducts().map((prod) => (
         <div
           className="product"
+          style={{
+            backgroundColor: "rgb(255, 255, 255)",
+            border: "solid",
+            height: "100%",
+            maxWidth: "40rem",
+            fontSize: "1rem",
+            margin: "1rem",
+            display: "grid",
+            textAlign: "center",
+          }}
           key={prod.id}
           onClick={() => {
             navigate(`/products/${prod.id}`);
           }}
         >
-          <HeartIcon />
-          <img src={imagesPath[prod.id]} alt={prod.name} className="product-image" />
+          <img
+            src={imagesPath[prod.id]}
+            alt={"NOT FOUND"}
+            style={{ height: "35rem", width: "100%" }}
+          />
+          <div
+            style={{
+              width: "2.5rem",
+              position: "relative",
+              bottom: "35rem",
+              left: "22rem",
+              cursor: "pointer",
+            }}
+            onClick={(e) => {
+              addFavorites(e, prod);
+            }}
+          >
+            <HeartIcon sx={{ height: "100%", width: "100%" }} />
+          </div>
+
           <Typography className="product-name">{prod.name}</Typography>
-          <Typography className="product-description">
-            {prod.description}
-          </Typography>
+
           <Typography className="product-price">{prod.price}€</Typography>
+
           <Button
             variant="contained"
             onClick={(e) => {
@@ -145,7 +177,7 @@ const Products = () => {
           >
             Agregar al carrito
           </Button>
-          <Button
+          {/* <Button
             variant="contained"
             color="error"
             onClick={(e) => {
@@ -153,7 +185,7 @@ const Products = () => {
             }}
           >
             Añadir a favoritos
-          </Button>
+          </Button> */}
         </div>
       ))}
     </div>
