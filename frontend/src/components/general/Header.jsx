@@ -18,15 +18,17 @@ const Header = () => {
     { information: "Equipamiento", location: "/equipamiento" },
     { information: "Marcas", location: "/marcas" },
   ];
+  // <header className="customHeader">
 
   return (
-    <header className="customHeader">
+    <header >
       {pages.map((page, index) => (
         <Button
           key={index}
           variant="contained"
           color={location.pathname === page.location ? "success" : "primary"}
           onClick={() => navigate(page.location)}
+          sty
         >
           <Typography>{page.information}</Typography>
         </Button>

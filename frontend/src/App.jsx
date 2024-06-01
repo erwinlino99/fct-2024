@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import RegisterPage from "./pages/RegisterPage";
 import CustomProfile from "./components/user/CustomProfile";
 import DetailsProducts from "./components/DetailsProduct";
-
+import CheckPayment from "./components/buy/CheckPayment";
 function App() {
   const [username, setUsername] = useState(null);
   const [userId, setUserId] = useState(null);
@@ -42,7 +42,7 @@ function App() {
           <Route path="/favourites" element={<Favourite />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/profile" element={<CustomProfile />} />
-      
+          <Route path="/payment" element={<CheckPayment />} />
         </Routes>
       </BrowserRouter>
     </div>

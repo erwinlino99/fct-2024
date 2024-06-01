@@ -13,37 +13,76 @@ import SummaryCart from "./SummaryCart";
 const Cart = () => {
   const userId = localStorage.getItem("userId");
   const [buy, setBuy] = useState([]);
-  const [quantities, setQuantities] = useState({});
 
   const fetchCart = async () => {
     try {
       const response = await fetch(`http://127.0.0.1:5000/cart/${userId}`);
       const data = await response.json();
       setBuy(data);
-
-      // Initialize quantities for each item
-      const initialQuantities = {};
-      data.forEach((item) => {
-        initialQuantities[item.id] = 1; // default quantity
-      });
-      setQuantities(initialQuantities);
     } catch (e) {
       console.log(e);
     }
   };
 
-  useEffect(() => {
-    fetchCart();
-    console.log("El carrito------->", buy);
-  }, []);
+  const removeFromCart = async (item) => {
+    console.log(item);
+    console.log("------->", buy);
+    const productIndexToRemove = buy.findIndex(
+      (product) => product.id === item.id
+    );
 
-  const handleQuantityChange = (itemId, event) => {
-    setQuantities({
-      ...quantities,
-      [itemId]: event.target.value,
-    });
+    if (productIndexToRemove !== -1) {
+      const updatedCart = [...buy];
+      updatedCart.splice(productIndexToRemove, 1);
+      setBuy(updatedCart);
+      try {
+        const response = await fetch(`http://127.0.0.1:5000/cart/${userId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedCart),
+        });
+        if (response.ok) {
+          console.log("Carrito actualizado con éxito:", response);
+        } else {
+          console.log("Error al actualizar el carrito:", response);
+        }
+      } catch (error) {
+        console.log("Error al actualizar el carrito:", error);
+      }
+    }
   };
 
+  const changeTimes = async (item, times) => {
+    const updatedCart = [...buy];
+    const itemIndex = updatedCart.findIndex((product) => product.id === item.id);
+  
+    if (itemIndex !== -1) {
+      updatedCart[itemIndex].times = times;
+      setBuy(updatedCart);
+  
+      try {
+        const response = await fetch(`http://127.0.0.1:5000/cart/${userId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedCart),
+        });
+        if (response.ok) {
+          console.log("Carrito actualizado con éxito:", response);
+        } else {
+          console.log("Error al actualizar el carrito:", response);
+        }
+      } catch (error) {
+        console.log("Error al actualizar el carrito:", error);
+      }
+    }
+  };
+  useEffect(() => {
+    fetchCart();
+  }, []);
   return (
     <>
       {buy.length === 0 ? (
@@ -72,13 +111,13 @@ const Cart = () => {
                 <Typography>{item.description}</Typography>
                 <Typography>{item.category}</Typography>
                 <Typography sx={{ fontWeight: "bold" }}>
-                  {item.price}
+                  {item.price}€
                 </Typography>
                 <FormControl variant="outlined" style={{ minWidth: 100 }}>
                   <InputLabel>Cantidad</InputLabel>
                   <Select
-                    value={quantities[item.id] || 1}
-                    onChange={(e) => handleQuantityChange(item.id, e)}
+                    defaultValue={item.times}
+                    onChange={(e) => changeTimes(item, e.target.value)}
                     label="Cantidad"
                     sx={{ height: 40, width: "4rem" }}
                   >
@@ -92,13 +131,14 @@ const Cart = () => {
                     variant="contained"
                     color="error"
                     sx={{ fontSize: 12 }}
+                    onClick={() => removeFromCart(item)}
                   >
                     Eliminar
                   </Button>
                 </FormControl>
               </div>
             ))}
-            <SummaryCart items={buy} />
+            <SummaryCart items={buy} pdf={false} />
           </div>
         </div>
       )}

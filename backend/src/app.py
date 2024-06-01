@@ -79,12 +79,14 @@ def updateWishlist(id):
         frontend_data_str = json.dumps(frontend_data)
         cursor = connection.connection.cursor()
         sql = f"UPDATE USERS SET WISHLIST = %s WHERE id = %s"
-        # Ejecutar la consulta SQL con los datos proporcionados desde el frontend y el ID de usuario
+        # Ejecucion del cursor
         cursor.execute(sql, (frontend_data_str, id))
         connection.connection.commit()
         return 'Lista de deseos actualizada correctamente',200
     except Exception as e:
         return str(e)
+    
+
 # PARA LA LISTA DE CARRITO --->
 # PARA LA LISTA DE CARRITO --->
 @app.route('/cart/<int:id>', methods=['GET'])
@@ -101,7 +103,21 @@ def bringCart(id):
             return "Usuario no encontrado"
     except Exception as e:
         return str(e)
-    
+
+
+@app.route('/cart/<int:id>', methods=['PUT'])
+def updateCart(id):
+    try:
+        frontend_data = request.json
+        frontend_data_str = json.dumps(frontend_data)
+        cursor = connection.connection.cursor()
+        sql = f"UPDATE USERS SET CART = %s WHERE id = %s"
+        cursor.execute(sql, (frontend_data_str, id))
+        connection.connection.commit()
+        return 'Se ha agregado al carrito',200
+    except Exception as e:
+        return str(e)
+
     
 # PARA PRODUCTOS --->
 # PARA PRODUCTOS --->
@@ -117,6 +133,7 @@ def listProduct():
         return jsonify(products)
     except Exception as e:
         return e
+ 
     
 @app.route('/products/<int:id>', methods=['GET'])
 def bringProduct(id):
@@ -148,37 +165,7 @@ def addProduct():
     except Exception as e:
         return str(e)
 
-# HAY QUE VERIFICAR QUE ESE PRODUCTO EXISTE -->
-@app.route('/products/<int:id>', methods=['DELETE'])
-def removeProduct(id):
-    try:
-        cursor = connection.connection.cursor()
-        sql = "DELETE FROM products WHERE id = %s"
-        cursor.execute(sql, (id,))
-        connection.connection.commit()
-        cursor.close()
-        return "Producto eliminado correctamente."
     
-    except Exception as e:
-        return str(e)
-    
-@app.route('/products/<int:id>', methods=['PUT'])
-def updateProduct(id):
-    try:
-        new_price = request.json.get('price')
-        cursor = connection.connection.cursor()
-        
-        sql = "UPDATE products SET price = %s WHERE id = %s"
-        cursor.execute(sql, (new_price, id))
-        connection.connection.commit()
-        cursor.close()
-        return "Precio del producto actualizado correctamente."
-    
-    except Exception as e:
-        # En caso de error, devolver el mensaje de error
-        return str(e)
-
-
 # Cuando un endopint no existe -->
 def not_found(error):
     return "<h1>Esta pagina no existe manin</h1>",404

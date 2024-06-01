@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
+import imagesPath from "../img/images.js"; // Importa el archivo path.js
+import {
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Typography,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  Radio,
+} from "@mui/material";
 const DetailsProducts = () => {
   const { id } = useParams(); // Obtener el ID del producto de la URL
   const [loading, setLoading] = useState(true);
@@ -35,20 +45,37 @@ const DetailsProducts = () => {
   }
 
   return (
-    <div style={{ backgroundColor: "white" }}>
-      <h2>Detalles del Producto</h2>
-      <p>
-        <strong>Nombre:</strong> {product.name}
-      </p>
-      <p>
-        <strong>Descripción:</strong> {product.description}
-      </p>
-      <p>
-        <strong>Precio:</strong> {product.price}€
-      </p>
-      <p>
-        <strong>Stock:</strong> {product.stock}
-      </p>
+    <div
+      style={{
+        backgroundColor: "#ebebeb",
+        marginLeft: "15rem",
+        marginRight: "15rem",
+        display: "flex",
+      }}
+    >
+      <img src={imagesPath[product.id]} style={{ height: "75rem" }} />
+      <div
+        style={{
+          border: "solid",
+          width: "100%",
+          textAlign: "left",
+          padding: 30,
+        }}
+      >
+        <Typography> {product.name}</Typography>
+        <Typography>{product.price}€</Typography>
+        <Typography>{product.description}</Typography>{" "}
+        <FormControl>
+          <FormLabel>Tallas</FormLabel>
+          <RadioGroup>
+            <FormControlLabel value="XS" control={<Radio />} label="XS" />
+            <FormControlLabel value="S" control={<Radio />} label="S" />
+            <FormControlLabel value="M" control={<Radio />} label="M" />
+            <FormControlLabel value="L" control={<Radio />} label="L" />
+            <FormControlLabel value="XL" control={<Radio />} label="XL" />
+          </RadioGroup>
+        </FormControl>
+      </div>
     </div>
   );
 };
