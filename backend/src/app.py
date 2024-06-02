@@ -108,8 +108,11 @@ def bringCart(id):
 @app.route('/cart/<int:id>', methods=['PUT'])
 def updateCart(id):
     try:
+        # Aqui recupero lo que el front me envia
         frontend_data = request.json
+        # lo transformo a un formato json y lo meto en columna correspondiente
         frontend_data_str = json.dumps(frontend_data)
+        # Hago conexion a la BBDD
         cursor = connection.connection.cursor()
         sql = f"UPDATE USERS SET CART = %s WHERE id = %s"
         cursor.execute(sql, (frontend_data_str, id))
