@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
-import img from "../img/2.jpg";
 import { Button, Typography } from "@mui/material";
-import "../styles/products.css";
 import HeartIcon from "@mui/icons-material/FavoriteOutlined";
 import { useParams, useNavigate } from "react-router-dom";
-import imagesPath from "../img/images.js"; // Importa el archivo path.js
-
+import imagesPath from "../img/images.jsx"; // Importa el archivo path.js
 
 const Products = () => {
   const navigate = useNavigate();
@@ -30,14 +27,16 @@ const Products = () => {
     e.stopPropagation();
     if (userId) {
       try {
+        // Recupero la lista de deseados
         const response = await fetch(
           `http://127.0.0.1:5000/wishlist/${userId}`
         );
         const wish = await response.json();
 
-        // Check if the product is already in the wishlist
+        //Veo si el producto ya existe
         const isProductInWishlist = wish.some((item) => item.id === prod.id);
         if (!isProductInWishlist) {
+          // Si no exite lo insertamos en al lista recupera y lo actulzamos en la BBD
           wish.push(prod);
           try {
             await fetch(`http://127.0.0.1:5000/wishlist/${userId}`, {
@@ -65,24 +64,25 @@ const Products = () => {
     e.stopPropagation();
     if (userId) {
       try {
+        //vamos a recuperar el carrito del usuario almacenado
         const response = await fetch(`http://127.0.0.1:5000/cart/${userId}`);
         const cart = await response.json();
-
-        // Verificar si el producto ya está en el carrito
+        //Vemos si el producto existe ya en el carrito
         const existingProductIndex = cart.findIndex(
           (item) => item.id === prod.id
         );
-
         if (existingProductIndex !== -1) {
-          // Si el producto ya está en el carrito, incrementa times
+         //si ya existe le agregamos la propiedad 'times', que será la cantidad de veces que almacenará
+         //de este producto
           cart[existingProductIndex].times += 1;
         } else {
-          // Si el producto no está en el carrito, agrégalo con times igual a 1
+          //caso contrario solo le agregamos la propiedad con 1 como valor inicial
+          // y lo agregamos al carrito recuperado 
           prod.times = 1;
           cart.push(prod);
         }
-
-        // Actualizar el carrito en el servidor
+        // Ahora con el carrito actualizado vamos a meterlo dentro del endopint correspodiente
+        // para que actulice el campo del usuario
         try {
           await fetch(`http://127.0.0.1:5000/cart/${userId}`, {
             method: "PUT",
@@ -121,22 +121,57 @@ const Products = () => {
   }, [category, products]);
 
   return (
-    <div className="products">
+    <div
+      style={{
+        marginTop:'2rem',
+        width: "auto",
+        height: "auto",
+        display: "grid",
+        gridTemplateColumns: "repeat(4, 23%)",
+      }}
+    >
       {filterProducts().map((prod) => (
         <div
           className="product"
+          style={{
+            backgroundColor: "rgb(255, 255, 255)",
+            border: "solid",
+            height: "100%",
+            maxWidth: "40rem",
+            fontSize: "1rem",
+            margin: "1rem",
+            display: "grid",
+            textAlign: "center",
+          }}
           key={prod.id}
           onClick={() => {
             navigate(`/products/${prod.id}`);
           }}
         >
-          <HeartIcon />
-          <img src={imagesPath[prod.id]} alt={prod.name} className="product-image" />
+          <img
+            src={imagesPath[prod.id]}
+            alt={"NOT FOUND"}
+            style={{ height: "35rem", width: "100%" }}
+          />
+          <div
+            style={{
+              width: "2.5rem",
+              position: "relative",
+              bottom: "35rem",
+              left: "22rem",
+              cursor: "pointer",
+            }}
+            onClick={(e) => {
+              addFavorites(e, prod);
+            }}
+          >
+            <HeartIcon sx={{ height: "100%", width: "100%" }} />
+          </div>
+
           <Typography className="product-name">{prod.name}</Typography>
-          <Typography className="product-description">
-            {prod.description}
-          </Typography>
+
           <Typography className="product-price">{prod.price}€</Typography>
+
           <Button
             variant="contained"
             onClick={(e) => {
@@ -145,7 +180,7 @@ const Products = () => {
           >
             Agregar al carrito
           </Button>
-          <Button
+          {/* <Button
             variant="contained"
             color="error"
             onClick={(e) => {
@@ -153,7 +188,7 @@ const Products = () => {
             }}
           >
             Añadir a favoritos
-          </Button>
+          </Button> */}
         </div>
       ))}
     </div>

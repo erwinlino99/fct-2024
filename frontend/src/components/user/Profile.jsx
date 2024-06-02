@@ -11,7 +11,7 @@ const Profile = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
-    const storedUsername = localStorage.getItem('username');
+    const storedUsername = localStorage.getItem("username");
     if (storedUsername) {
       setUsername(storedUsername);
     }
@@ -27,19 +27,27 @@ const Profile = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('username');
-    localStorage.removeItem('userId');
+    localStorage.removeItem("username");
+    localStorage.removeItem("userId");
     setUsername(null);
     setUsername(null);
     window.location.href = "/";
   };
 
   return (
-    <div className="profile">
+    <div
+      style={{
+        backgroundColor: "#ebebeb",
+        width: "30rem",
+        display: "flex",
+        position: "absolute",
+        right: "2rem",
+      }}
+    >
       {username ? (
         <>
           <Button onClick={handleMenuClick}>
-          <SvgIcon component={LoginIcon} fontSize="small" />
+            <SvgIcon component={LoginIcon} fontSize="small" />
             Bienvenido,{username}
           </Button>
           <Menu
@@ -67,7 +75,6 @@ const Profile = () => {
           <SvgIcon component={HeartIcon} fontSize="small" /> Favoritos
         </Button>
       </Link>
-
       <Link to="/cart">
         <Button>
           <SvgIcon component={ShoppingIcon} fontSize="small" /> Carrito

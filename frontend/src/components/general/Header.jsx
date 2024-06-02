@@ -15,8 +15,7 @@ const Header = () => {
     { information: "Niñas", location: "/girls" },
     { information: "Niños", location: "/boys" },
     { information: "Ofertas", location: "/ofertas" },
-    { information: "Equipamiento", location: "/equipamiento" },
-    { information: "Marcas", location: "/marcas" },
+    { information: "Accesorios", location: "/accesorios" },
   ];
   // <header className="customHeader">
 

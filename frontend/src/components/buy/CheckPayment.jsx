@@ -7,6 +7,7 @@ const CheckPayment = () => {
   const userJSON = localStorage.getItem("userJSON");
   const user = JSON.parse(userJSON);
   const [total, setTotal] = useState(0); // Estado para almacenar el total
+  
   const fetchCart = async () => {
     try {
       const response = await fetch(`http://127.0.0.1:5000/cart/${userId}`);

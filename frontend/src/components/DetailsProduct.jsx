@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import imagesPath from "../img/images.js"; // Importa el archivo path.js
+import imagesPath from "../img/images.jsx"; // Importa el archivo path.js
 import {
   Checkbox,
   FormControlLabel,
