@@ -27,14 +27,16 @@ const Products = () => {
     e.stopPropagation();
     if (userId) {
       try {
+        // Recupero la lista de deseados
         const response = await fetch(
           `http://127.0.0.1:5000/wishlist/${userId}`
         );
         const wish = await response.json();
 
-        // Check if the product is already in the wishlist
+        //Veo si el producto ya existe
         const isProductInWishlist = wish.some((item) => item.id === prod.id);
         if (!isProductInWishlist) {
+          // Si no exite lo insertamos en al lista recupera y lo actulzamos en la BBD
           wish.push(prod);
           try {
             await fetch(`http://127.0.0.1:5000/wishlist/${userId}`, {
@@ -62,24 +64,25 @@ const Products = () => {
     e.stopPropagation();
     if (userId) {
       try {
+        //vamos a recuperar el carrito del usuario almacenado
         const response = await fetch(`http://127.0.0.1:5000/cart/${userId}`);
         const cart = await response.json();
-
-        // Verificar si el producto ya está en el carrito
+        //Vemos si el producto existe ya en el carrito
         const existingProductIndex = cart.findIndex(
           (item) => item.id === prod.id
         );
-
         if (existingProductIndex !== -1) {
-          // Si el producto ya está en el carrito, incrementa times
+         //si ya existe le agregamos la propiedad 'times', que será la cantidad de veces que almacenará
+         //de este producto
           cart[existingProductIndex].times += 1;
         } else {
-          // Si el producto no está en el carrito, agrégalo con times igual a 1
+          //caso contrario solo le agregamos la propiedad con 1 como valor inicial
+          // y lo agregamos al carrito recuperado 
           prod.times = 1;
           cart.push(prod);
         }
-
-        // Actualizar el carrito en el servidor
+        // Ahora con el carrito actualizado vamos a meterlo dentro del endopint correspodiente
+        // para que actulice el campo del usuario
         try {
           await fetch(`http://127.0.0.1:5000/cart/${userId}`, {
             method: "PUT",

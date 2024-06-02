@@ -37,6 +37,7 @@ function App() {
         <Routes>
           {!username && <Route path="/login" element={<LoginPage />} />}
           <Route path="/" element={<SelectCategory />} />
+          <Route path="/register" element={<RegisterPage />} />
           <Route path="/:category" element={<Products />} />
           <Route path="/test" element={<Products />} />
           <Route path="/products/:id" element={<DetailsProducts />} />
