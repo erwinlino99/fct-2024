@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Button, Typography } from "@mui/material";
 import SummaryCart from "../user/SummaryCart";
+import { Navigate, useNavigate } from "react-router-dom";
 const CheckPayment = () => {
+  const navigate=useNavigate();
   const userId = localStorage.getItem("userId");
   const [buy, setBuy] = useState([]);
   const userJSON = localStorage.getItem("userJSON");
@@ -30,6 +32,10 @@ const CheckPayment = () => {
     });
     setTotal(totalPrice);
   }, [buy]);
+
+  const edit=()=>{
+    navigate('/profile')
+  }
   return (
     <div style={{ backgroundColor: "white", height: 1200 }}>
       <div>
@@ -38,6 +44,7 @@ const CheckPayment = () => {
         <Typography>{user.surname}</Typography>
         <Typography>{user.domicile}</Typography>
         <Typography>{user.phone}</Typography>
+        <Button variant="contained" color="warning" onClick={()=>{edit()}}>Editar</Button>
       </div>
 
       <div>

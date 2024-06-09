@@ -9,14 +9,14 @@ import Cart from "./components/user/Cart";
 import Favourite from "./components/user/Favourite";
 import { useEffect, useState } from "react";
 import RegisterPage from "./pages/RegisterPage";
-import CustomProfile from "./components/user/CustomProfile";
+import MyProfile from "./components/user/MyProfile";
 import DetailsProducts from "./components/DetailsProduct";
 import CheckPayment from "./components/buy/CheckPayment";
 import SelectCategory from "./components/general/SelectCategory";
 function App() {
   const [username, setUsername] = useState(null);
   const [userId, setUserId] = useState(null);
-
+  
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     const storedUserId = localStorage.getItem("userId");
@@ -43,7 +43,7 @@ function App() {
           <Route path="/products/:id" element={<DetailsProducts />} />
           <Route path="/favourites" element={<Favourite />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/profile" element={<CustomProfile />} />
+          <Route path="/profile" element={<MyProfile />} />
           <Route path="/payment" element={<CheckPayment />} />
         </Routes>
       </BrowserRouter>

@@ -21,8 +21,10 @@ const LoginPage = () => {
       });
   
       if (user) {
-        console.log('el usuario es : -------->>',user)
+        const formattedBornDate = new Date(user.bornDate).toISOString().split('T')[0];
+        user.bornDate = formattedBornDate;
         localStorage.setItem('userJSON',JSON.stringify(user))
+        console.log('el usuario es : -------->>',user)
         localStorage.setItem("userId", user.id);
         localStorage.setItem("username", user.username);
         window.location.href = "/";

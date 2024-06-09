@@ -7,6 +7,8 @@ const SummaryCart = ({ items, pdf }) => {
   const [price, setPrice] = useState(0);
   const delivery = 7.99;
   const discountRate = 10;
+  const userId = localStorage.getItem("userId");
+
   const calculatePrice = (items) => {
     let total = 0;
     for (let item of items) {
@@ -16,9 +18,46 @@ const SummaryCart = ({ items, pdf }) => {
     setPrice(total);
   };
 
+  const updateDataBase = async (items) => {
+    for (const prod of items) {
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:5000/products/${prod.id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(prod),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        } else {
+          try {
+            const response = await fetch(
+              `http://127.0.0.1:5000/cart/${userId}`,
+              {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(prod),
+              }
+            );
+
+            console.log(response);
+          } catch (e) {}
+        }
+      } catch (e) {}
+    }
+    alert('Gracias por tu compra')
+    navigate('/')
+  };
+
   useEffect(() => {
     calculatePrice(items);
-    //console.log('dentro del carrito-->',items)
   }, [items]);
 
   return (
@@ -46,11 +85,12 @@ const SummaryCart = ({ items, pdf }) => {
         </Button>
       ) : (
         <Button
-        variant="contained"
-        color="success"
-      >
-        Finalizar compra
-      </Button>
+          variant="contained"
+          color="success"
+          onClick={() => updateDataBase(items)}
+        >
+          Finalizar compra
+        </Button>
       )}
     </div>
   );

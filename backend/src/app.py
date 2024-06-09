@@ -37,7 +37,6 @@ def get_user(id):
     except Exception as e:
         return str(e)
 # REGISTRO DE USUARIO -->
-# REVISION : FALTA HACER EL METODO DE MODIFICAR USUARIO, CONTRASEÑA ETC
 @app.route('/users', methods=['POST'])
 def add_user():
     try:
@@ -51,6 +50,20 @@ def add_user():
         return "Usuario agregado correctamente."
     except Exception as e:
         return str(e)
+
+@app.route('/users/<int:id>', methods=['PUT'])
+def update_user(id):
+    try:        
+        update_user_data = request.json
+        cursor = connection.connection.cursor()
+        sql = "UPDATE users SET username = %s, email = %s, phone = %s, domicile = %s, bornDate = %s, password_hash = %s WHERE id = %s"
+        cursor.execute(sql, (update_user_data['username'], update_user_data['email'], update_user_data['phone'], update_user_data['domicile'], update_user_data['bornDate'], update_user_data['password_hash'], id))
+        connection.connection.commit()
+        cursor.close()
+        return jsonify({'message': 'User updated successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
 
 # PARA LA LISTA DE DESEADOS/FAVORITOS --->
 # PARA LA LISTA DE DESEADOS/FAVORITOS --->
@@ -121,9 +134,29 @@ def updateCart(id):
     except Exception as e:
         return str(e)
 
-    
-# PARA PRODUCTOS --->
-# PARA PRODUCTOS --->
+# //! TRABAJANDO AQUI 
+@app.route('/cart/<int:id>', methods=['DELETE'])
+def delete_cart(id):
+    try:
+        front_data = request.json
+        data = json.dumps(front_data)
+        cursor = connection.connection.cursor()
+        cursor.execute('SELECT cart FROM users WHERE id = %s', (id,))
+        current_data = cursor.fetchone()[0]
+        obj = json.loads(current_data)
+        print(obj)
+        for product in obj:
+            if product['id'] == front_data['id']:
+                obj.remove(product)
+                break
+        update_data = json.dumps(obj)
+        sql = "UPDATE users SET cart = %s WHERE id = %s"
+        cursor.execute(sql, (update_data, id))
+        connection.connection.commit()
+        return jsonify({'message': 'Producto eliminado del carrito'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
 
 @app.route('/products',methods=['GET'])
 def listProduct():
@@ -150,6 +183,28 @@ def bringProduct(id):
         return jsonify(products)
     except Exception as e:
         return str(e)
+    
+@app.route('/products/<int:id>', methods=['PUT'])
+def updateProduct(id):
+    try:
+        prod = request.json
+        times = prod['times']
+        cursor = connection.connection.cursor()
+        # Verificar el stock actual
+        cursor.execute('SELECT STOCK FROM PRODUCTS WHERE ID = %s', (id,))
+        current_stock = cursor.fetchone()[0]
+        # Verificar si el stock resultante sería negativo
+        if current_stock - times < 0:
+            return jsonify({'error': 'Stock insuficiente'}), 400
+        # Actualizar el stock
+        sql = 'UPDATE PRODUCTS SET STOCK = STOCK - %s WHERE ID = %s'
+        cursor.execute(sql, (times, id))
+        connection.connection.commit()
+        
+        return jsonify({'message': 'Producto actualizado stock'}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400 
     
 @app.route('/products', methods=['POST'])
 def addProduct():
