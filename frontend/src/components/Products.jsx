@@ -72,12 +72,12 @@ const Products = () => {
           (item) => item.id === prod.id
         );
         if (existingProductIndex !== -1) {
-         //si ya existe le agregamos la propiedad 'times', que será la cantidad de veces que almacenará
-         //de este producto
+          //si ya existe le agregamos la propiedad 'times', que será la cantidad de veces que almacenará
+          //de este producto
           cart[existingProductIndex].times += 1;
         } else {
           //caso contrario solo le agregamos la propiedad con 1 como valor inicial
-          // y lo agregamos al carrito recuperado 
+          // y lo agregamos al carrito recuperado
           prod.times = 1;
           cart.push(prod);
         }
@@ -120,13 +120,14 @@ const Products = () => {
     }
   }, [category, products]);
 
+
   return (
     <div
       style={{
-        marginTop:'2rem',
+        marginTop: "2rem",
         width: "auto",
         height: "auto",
-        display: "grid",
+        display: "flex",
         gridTemplateColumns: "repeat(4, 23%)",
       }}
     >
@@ -158,14 +159,16 @@ const Products = () => {
               width: "2.5rem",
               position: "relative",
               bottom: "35rem",
-              left: "22rem",
+              left: "20rem",
               cursor: "pointer",
             }}
             onClick={(e) => {
               addFavorites(e, prod);
             }}
           >
-            <HeartIcon sx={{ height: "100%", width: "100%" }} />
+           {/* <HeartIcon sx={{ fontSize: "2.5rem", color: clicked === true ? 'red' : '' }} /> */}
+           <HeartIcon sx={{ fontSize: "2.5rem" }} />
+
           </div>
 
           <Typography className="product-name">{prod.name}</Typography>

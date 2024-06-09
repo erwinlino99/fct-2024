@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { Typography, Button, TextField, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import {Divider} from "@mui/material";
+import { Divider } from "@mui/material";
+
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState(""); // Nuevo estado para el correo electrónico
+  const [email, setEmail] = useState("");
+  const [domicile, setDomicilie] = useState("");
+  const [phone, setPhone] = useState(0);
+  const [born, setBorn] = useState("");
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -20,6 +25,9 @@ const RegisterPage = () => {
           username: username,
           password_hash: password,
           email: email,
+          domicile: domicile,
+          phone: phone,
+          bornDate: born,
         }),
       });
 
@@ -40,7 +48,7 @@ const RegisterPage = () => {
       maxWidth="sm"
       style={{
         backgroundColor: "#D7DED8",
-        height: "25rem",
+        height: "auto",
         marginTop: "10rem",
       }}
     >
@@ -81,17 +89,51 @@ const RegisterPage = () => {
             onChange={(e) => setEmail(e.target.value)}
             style={{ backgroundColor: "white" }}
           />
+          <TextField
+            id="domicile"
+            label="Dirección"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={domicile}
+            onChange={(e) => setDomicilie(e.target.value)}
+            style={{ backgroundColor: "white" }}
+          />
+          <TextField
+            id="phone"
+            label="Teléfono"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            style={{ backgroundColor: "white" }}
+          />
+          <TextField
+            id="bornDate"
+            label="Fecha de nacimiento"
+            type="date"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={born}
+            onChange={(e) => setBorn(e.target.value)}
+            style={{ backgroundColor: "white" }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
           <Button type="submit" variant="contained" color="success">
             Registrarse
           </Button>
         </form>
 
-        <Divider style={{marginTop:'0.5rem',marginBottom:'0.5rem'}}/>
+        <Divider style={{ marginTop: "0.5rem", marginBottom: "0.5rem" }} />
         <Button
           variant="contained"
           color="warning"
           onClick={() => navigate("/login")}
-          style={{marginTop:'0.5rem'}}
+          style={{ marginTop: "0.5rem" }}
         >
           ¿Ya tienes una cuenta? Inicia sesión
         </Button>

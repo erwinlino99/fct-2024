@@ -40,11 +40,17 @@ def get_user(id):
 @app.route('/users', methods=['POST'])
 def add_user():
     try:
-        attribute = '[]'
+        attribute = '[]'  # Asumiendo que wishlist y cart son listas iniciales vacías
         user_data = request.json
         cursor = connection.connection.cursor()
-        sql = "INSERT INTO users (username, password_hash, email, wishlist, cart) VALUES (%s, %s, %s, %s, %s)"
-        cursor.execute(sql, (user_data['username'], user_data['password_hash'], user_data['email'], attribute, attribute))
+        sql = "INSERT INTO users (username, password_hash, email, domicile, phone, bornDate, wishlist, cart) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        cursor.execute(sql, (  
+            user_data['username'],
+            user_data['password_hash'],
+            user_data['email'],
+            user_data['domicile'],
+            user_data['phone'],
+            user_data['bornDate'],attribute, attribute))
         connection.connection.commit()
         cursor.close()
         return "Usuario agregado correctamente."

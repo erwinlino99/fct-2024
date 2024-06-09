@@ -22,7 +22,7 @@ const MyProfile = () => {
     if (userJSON) {
       const currentUser = JSON.parse(userJSON);
       setUser(currentUser);
-      console.log(currentUser)
+      console.log(currentUser);
       setEditedUser(currentUser);
     }
   }, [userJSON]);
@@ -31,8 +31,8 @@ const MyProfile = () => {
     setEditMode(true);
   };
 
-  const handleSave =async () => {
-    try{
+  const handleSave = async () => {
+    try {
       const response = await fetch(
         `http://127.0.0.1:5000/users/${editedUser.id}`,
         {
@@ -43,14 +43,10 @@ const MyProfile = () => {
           body: JSON.stringify(editedUser),
         }
       );
-
-    }catch(e){
-
-    }
+    } catch (e) {}
     setUser(editedUser);
     setEditMode(false);
-    localStorage.setItem("userJSON", JSON.stringify(editedUser))
-    
+    localStorage.setItem("userJSON", JSON.stringify(editedUser));
   };
 
   const handleChange = (e) => {
@@ -59,34 +55,40 @@ const MyProfile = () => {
       ...prevState,
       [name]: value,
     }));
-
   };
 
   return (
-    <div>
+    <div
+      style={{
+        margin: "auto",
+        padding: "20px",
+        borderRadius: "10px",
+        border: "solid",
+        textAlign: "center",
+        width: "30rem",
+        marginTop:'2rem'
+      }}
+    >
       {user && (
-        <TableContainer
-          component={Paper}
-          sx={{ marginTop: 10, background: "#aba6a6" }}
-        >
+        <TableContainer component={Paper}>
           <Table aria-label="simple table">
             <TableHead>
-              <Typography
-                variant="h4"
-                gutterBottom
-                style={{ fontWeight: "bold", marginBottom: "20px" }}
-              >
-                Perfil del Usuario
-              </Typography>
+              <TableRow>
+                <TableCell colSpan={2}>
+                  <Typography variant="h5" style={{ fontWeight: "bold" }}>
+                    Perfil del Usuario
+                  </Typography>
+                </TableCell>
+              </TableRow>
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell component="th" scope="row">
+                <TableCell>
                   <Typography variant="subtitle1">
                     Nombre de usuario:
                   </Typography>
                 </TableCell>
-                <TableCell align="left">
+                <TableCell>
                   {editMode ? (
                     <TextField
                       name="username"
@@ -99,12 +101,12 @@ const MyProfile = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell component="th" scope="row">
+                <TableCell>
                   <Typography variant="subtitle1">
                     Correo Electrónico:
                   </Typography>
                 </TableCell>
-                <TableCell align="left">
+                <TableCell>
                   {editMode ? (
                     <TextField
                       name="email"
@@ -117,10 +119,10 @@ const MyProfile = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell component="th" scope="row">
-                  <Typography variant="subtitle1">Telefono:</Typography>
+                <TableCell>
+                  <Typography variant="subtitle1">Teléfono:</Typography>
                 </TableCell>
-                <TableCell align="left">
+                <TableCell>
                   {editMode ? (
                     <TextField
                       name="phone"
@@ -133,10 +135,10 @@ const MyProfile = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell component="th" scope="row">
+                <TableCell>
                   <Typography variant="subtitle1">Dirección:</Typography>
                 </TableCell>
-                <TableCell align="left">
+                <TableCell>
                   {editMode ? (
                     <TextField
                       name="domicile"
@@ -149,10 +151,10 @@ const MyProfile = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell component="th" scope="row">
+                <TableCell>
                   <Typography variant="subtitle1">Nacimiento:</Typography>
                 </TableCell>
-                <TableCell align="left">
+                <TableCell>
                   {editMode ? (
                     <TextField
                       name="bornDate"
@@ -165,10 +167,10 @@ const MyProfile = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell component="th" scope="row">
+                <TableCell>
                   <Typography variant="subtitle1">Contraseña:</Typography>
                 </TableCell>
-                <TableCell align="left">
+                <TableCell>
                   {editMode ? (
                     <TextField
                       name="password_hash"
@@ -182,15 +184,17 @@ const MyProfile = () => {
               </TableRow>
             </TableBody>
           </Table>
-          {editMode ? (
-            <Button variant="contained" color="success" onClick={handleSave}>
-              Guardar
-            </Button>
-          ) : (
-            <Button variant="contained" color="error" onClick={handleEdit}>
-              Editar
-            </Button>
-          )}
+          <div style={{ textAlign: "center", marginTop: 20 }}>
+            {editMode ? (
+              <Button variant="contained" color="success" onClick={handleSave}>
+                Guardar
+              </Button>
+            ) : (
+              <Button variant="contained" color="warning" onClick={handleEdit}>
+                Editar
+              </Button>
+            )}
+          </div>
         </TableContainer>
       )}
     </div>

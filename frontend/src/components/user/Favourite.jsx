@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import EmptyPage from "../../pages/EmptyPage";
-import { Button } from "@mui/material";
-
+import { Button, Typography } from "@mui/material";
+import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
 const Favourite = () => {
   const userId = localStorage.getItem("userId");
   const [products, setProducts] = useState([]);
@@ -21,8 +21,10 @@ const Favourite = () => {
 
   // Función para manejar la eliminación del producto de la lista
   const removeFromWishlist = async (productId) => {
-    console.log( productId)
-    const productIndexToRemove = products.findIndex(product => product.id === productId);
+    console.log(productId);
+    const productIndexToRemove = products.findIndex(
+      (product) => product.id === productId
+    );
 
     if (productIndexToRemove !== -1) {
       // Crear una copia de la lista de productos
@@ -31,35 +33,34 @@ const Favourite = () => {
       updatedProducts.splice(productIndexToRemove, 1);
       // Actualizar el estado de 'products' con la lista actualizada
       setProducts(updatedProducts);
-    
+
       console.log(JSON.stringify(updatedProducts));
-      console.log(typeof(JSON.stringify(updatedProducts)) )
+      console.log(typeof JSON.stringify(updatedProducts));
 
-      try{
-        const response = await fetch(`http://127.0.0.1:5000/wishlist/${userId}`,{
-          method:'PUT',
-          headers:{
-            'Content-Type': 'application/json' 
-          },
-          body:JSON.stringify(updatedProducts)
-        });
-        if(response){
-          console.log(response)
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:5000/wishlist/${userId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedProducts),
+          }
+        );
+        if (response) {
+          console.log(response);
         }
-
-      }catch(error){
-        console.log(error)
+      } catch (error) {
+        console.log(error);
       }
     }
-
   };
 
-  // useEffect para cargar la lista de favoritos cuando se monta el componente
   useEffect(() => {
     fetchWishlist();
   }, []);
 
-  // useEffect para imprimir la lista actualizada cuando 'remove' cambia
   useEffect(() => {
     if (remove) {
       console.log("LISTA ACTUALIZADA --->", products);
@@ -73,23 +74,45 @@ const Favourite = () => {
           title={"No tienes ningún artículo en tu lista de Favoritos"}
         />
       ) : (
-        <div style={{ backgroundColor: "white" }}>
-          <p>Los artículos favoritos son:</p>
+        <div
+          style={{
+            margin: "auto",
+            padding: "20px",
+            borderRadius: "10px",
+            textAlign: "center",
+            border: "solid 1px",
+            width: "30rem",
+            marginTop: "2rem",
+          }}
+        >
+          <Typography variant="h4">Mi lista de favoritos</Typography>
           {products.map((item) => (
             <div
-              style={{ backgroundColor: "grey", margin: "20px" }}
+              style={{
+                backgroundColor: "#d4d2cf",
+                margin: "2rem",
+                textAlign: "center",
+                borderRadius: "10px",
+                alignItems: "center",
+              }}
               key={item.id}
             >
-              <h1>{item.name}</h1>
-              <h1>{item.description}</h1>
-              <h1>{item.category}</h1>
-              <h1>{item.price}</h1>
-              <Button
-                variant="contained"
-                onClick={() => removeFromWishlist(item.id)}
+              <Typography variant="h5">{item.name}</Typography>
+              <Typography variant="body1">{item.description}</Typography>
+              <Typography variant="body1">{item.category}</Typography>
+              <Typography variant="body1">{item.price}€</Typography>
+              <div
+                style={{
+                  height: "auto",
+                  width: "auto",
+                  backgroundColor: "white",
+                }}
               >
-                Ya no me gusta
-              </Button>
+                <HeartBrokenIcon
+                  onClick={() => removeFromWishlist(item.id)}
+                  sx={{ color: "#ab1111", cursor: "pointer", }}
+                />
+              </div>
             </div>
           ))}
         </div>

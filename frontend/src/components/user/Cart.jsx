@@ -6,6 +6,7 @@ import {
   FormControl,
   InputLabel,
   Typography,
+  Box,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import SummaryCart from "./SummaryCart";
@@ -56,12 +57,14 @@ const Cart = () => {
 
   const changeTimes = async (item, times) => {
     const updatedCart = [...buy];
-    const itemIndex = updatedCart.findIndex((product) => product.id === item.id);
-  
+    const itemIndex = updatedCart.findIndex(
+      (product) => product.id === item.id
+    );
+
     if (itemIndex !== -1) {
       updatedCart[itemIndex].times = times;
       setBuy(updatedCart);
-  
+
       try {
         const response = await fetch(`http://127.0.0.1:5000/cart/${userId}`, {
           method: "PUT",
@@ -84,42 +87,71 @@ const Cart = () => {
     fetchCart();
   }, []);
   return (
-    <>
+    <div>
       {buy.length === 0 ? (
-        <div>
-          <EmptyPage
-            title={
-              "No tienes ningun articulo en tu carrito vamos a empezar a comprar"
-            }
-          />
-        </div>
+        <EmptyPage
+          title={
+            "No tienes ningún artículo en tu carrito"
+          }
+        />
       ) : (
-        <div>
-          <div style={{ backgroundColor: "grey", width: "30rem" }}>
+        <div
+          style={{
+            margin: "auto",
+            padding: "20px",
+          }}
+        >
+          <div
+            style={{
+              margin: "auto",
+              padding: "20px",
+              borderRadius: "10px",
+              border: "solid 1px",
+              textAlign: "center",
+              width: "20rem",
+            }}
+          >
+            <SummaryCart items={buy} pdf={false} />
+          </div>
+          <div
+            style={{
+              border: "solid 1px",
+              display: "flex",
+              padding: "2rem",
+              marginTop: 20,
+              borderRadius: "10px",
+            }}
+          >
             {buy.map((item) => (
-              <div
-                style={{
-                  backgroundColor: "white",
-                  margin: "2rem",
-                  padding: "rem",
-                  height: "auto",
-                  width: "10rem",
-                }}
+              <Box
                 key={item.id}
+                sx={{
+                  backgroundColor: "#d4d2cf",
+                  borderRadius: "5px",
+                  padding: "10px",
+                  margin: 2,
+                  width: "15rem",
+                  textAlign: "center",
+                }}
               >
-                <Typography>{item.name}</Typography>
-                <Typography>{item.description}</Typography>
-                <Typography>{item.category}</Typography>
-                <Typography sx={{ fontWeight: "bold" }}>
+                <Typography variant="h6">{item.name}</Typography>
+                <Typography variant="body1">{item.description}</Typography>
+                <Typography variant="body1">{item.category}</Typography>
+                <Typography
+                  variant="body1"
+                  sx={{ fontWeight: "bold", marginBottom: "10px" }}
+                >
                   {item.price}€
                 </Typography>
-                <FormControl variant="outlined" style={{ minWidth: 100 }}>
+                <FormControl
+                  variant="outlined"
+                  sx={{ width: "100%", background: "white" }}
+                >
                   <InputLabel>Cantidad</InputLabel>
                   <Select
                     defaultValue={item.times}
                     onChange={(e) => changeTimes(item, e.target.value)}
                     label="Cantidad"
-                    sx={{ height: 40, width: "4rem" }}
                   >
                     {[...Array(10).keys()].map((x) => (
                       <MenuItem key={x + 1} value={x + 1}>
@@ -127,22 +159,22 @@ const Cart = () => {
                       </MenuItem>
                     ))}
                   </Select>
-                  <Button
-                    variant="contained"
-                    color="error"
-                    sx={{ fontSize: 12 }}
-                    onClick={() => removeFromCart(item)}
-                  >
-                    Eliminar
-                  </Button>
                 </FormControl>
-              </div>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => removeFromCart(item)}
+                  sx={{ marginTop: "10px" }}
+                >
+                  Eliminar
+                </Button>
+              </Box>
             ))}
-            <SummaryCart items={buy} pdf={false} />
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
+
 export default Cart;
