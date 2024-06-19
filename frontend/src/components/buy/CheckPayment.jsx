@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
-import { Button, Typography } from "@mui/material";
+import { Button, Typography, Box } from "@mui/material";
 import SummaryCart from "../user/SummaryCart";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 const CheckPayment = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
   const [buy, setBuy] = useState([]);
   const userJSON = localStorage.getItem("userJSON");
   const user = JSON.parse(userJSON);
-  const [total, setTotal] = useState(0); // Estado para almacenar el total
-  
+  const [total, setTotal] = useState(0);
+
   const fetchCart = async () => {
     try {
       const response = await fetch(`http://127.0.0.1:5000/cart/${userId}`);
@@ -33,46 +34,45 @@ const CheckPayment = () => {
     setTotal(totalPrice);
   }, [buy]);
 
-  const edit=()=>{
-    navigate('/profile')
-  }
+  const edit = () => {
+    navigate("/profile");
+  };
+
   return (
-    <div style={{ backgroundColor: "white", height: 1200 }}>
-      <div>
-        <h1>Mi informacion</h1>
+    <Box sx={{ backgroundColor: "white", padding: 2, borderRadius: 1, maxWidth: 800, margin: "0 auto" }}>
+      <Box sx={{ marginBottom: 2, padding: 2, border: "1px solid #ddd", borderRadius: 1 }}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Mi información
+        </Typography>
         <Typography>{user.username}</Typography>
         <Typography>{user.surname}</Typography>
         <Typography>{user.domicile}</Typography>
         <Typography>{user.phone}</Typography>
-        <Button variant="contained" color="warning" onClick={()=>{edit()}}>Editar</Button>
-      </div>
+        <Button variant="contained" color="warning" onClick={edit} sx={{ marginTop: 2 }}>
+          Editar
+        </Button>
+      </Box>
 
-      <div>
-        <h1>Detalles del pedido</h1>
+      <Box sx={{ marginBottom: 2, padding: 2, border: "1px solid #ddd", borderRadius: 1 }}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Detalles del pedido
+        </Typography>
         {buy.map((item) => (
-          <div key={item.id}>
+          <Box key={item.id} sx={{ display: "flex", justifyContent: "space-between", padding: "5px 0" }}>
             <Typography>
               {item.name} x {item.times}
             </Typography>
             <Typography>{item.price}€</Typography>
-          </div>
+          </Box>
         ))}
         <Typography>Total: {total.toFixed(2)}€</Typography>
-      </div>
-      <div>
-        <h1>Metodo de pago</h1>
-        <div>
-          <Typography>Tarjeta</Typography>
-        </div>
-        <div>
-          <Typography>Paypal</Typography>
-        </div>
-      </div>
+      </Box>
 
-      <div style={{ border: "solid 1px", width: "20rem" }}>
-        <SummaryCart items={buy} pdf={true}></SummaryCart>
-      </div>
-    </div>
+      <Box sx={{ border: "1px solid #ddd", borderRadius: 1, padding: 2 }}>
+        <SummaryCart items={buy} pdf={true} />
+      </Box>
+    </Box>
   );
 };
+
 export default CheckPayment;

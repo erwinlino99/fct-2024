@@ -17,7 +17,7 @@ const SelectCategory = () => {
     { information: "Niños", location: "/boys", img: boys },
   
     { information: "Accesorios", location: "/accesorios", img: accesories },
-    { information: "Ofertas", location: "/ofertas", img: offers },
+    // { information: "Ofertas", location: "/ofertas", img: offers },
   ];
 
   return (

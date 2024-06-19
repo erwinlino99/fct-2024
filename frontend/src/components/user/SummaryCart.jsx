@@ -2,6 +2,7 @@ import { Button, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+
 const SummaryCart = ({ items, pdf }) => {
   const navigate = useNavigate();
   const [price, setPrice] = useState(0);
@@ -14,7 +15,6 @@ const SummaryCart = ({ items, pdf }) => {
     for (let item of items) {
       total += item.price * item.times;
     }
-
     setPrice(total);
   };
 
@@ -52,13 +52,16 @@ const SummaryCart = ({ items, pdf }) => {
         }
       } catch (e) {}
     }
-    alert('Gracias por tu compra')
-    navigate('/')
+    alert('Gracias por tu compra');
+    navigate('/');
   };
 
   useEffect(() => {
     calculatePrice(items);
   }, [items]);
+
+  const finalPrice = price >= 25 ? price : price + delivery;
+  const discountedPrice = finalPrice - (discountRate / 100) * finalPrice;
 
   return (
     <div
@@ -72,10 +75,10 @@ const SummaryCart = ({ items, pdf }) => {
       <Typography sx={{ color: "red" }}>Descuento: {discountRate}%</Typography>
       <Divider sx={{ borderColor: "black", margin: "16px 0" }} />
       <Typography variant="h6">
-        Total: {(price - 10 * (price / 100)).toFixed(2)}{" "}
+        Total: {discountedPrice.toFixed(2)}€
       </Typography>
 
-      {pdf == false ? (
+      {pdf === false ? (
         <Button
           variant="contained"
           color="success"
@@ -95,5 +98,5 @@ const SummaryCart = ({ items, pdf }) => {
     </div>
   );
 };
-// {`../img/${prod.id}.jpg`}
+
 export default SummaryCart;

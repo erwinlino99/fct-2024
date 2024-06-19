@@ -14,13 +14,15 @@ const Header = () => {
     { information: "Mujer", location: "/mujer" },
     { information: "Niñas", location: "/girls" },
     { information: "Niños", location: "/boys" },
-    { information: "Ofertas", location: "/ofertas" },
+    // { information: "Ofertas", location: "/ofertas" },
     { information: "Accesorios", location: "/accesorios" },
   ];
   // <header className="customHeader">
 
+  console.log("Estoy en--->",location.pathname)
   return (
-    <header >
+    // etiqueta html
+    <header > 
       {pages.map((page, index) => (
         <Button
           key={index}

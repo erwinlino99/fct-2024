@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import imagesPath from "../img/images.jsx"; // Importa el archivo path.js
+import imagesPath from "../img/images.jsx"; 
 import {
   Checkbox,
   FormControlLabel,
@@ -13,27 +13,29 @@ import {
   Button,
 } from "@mui/material";
 const DetailsProducts = () => {
-  const { id } = useParams(); // Obtener el ID del producto de la URL
+  const { id } = useParams(); // id del producto
   const [loading, setLoading] = useState(true);
-  const [product, setProduct] = useState(null);
+  
+  const [product, setProduct] = useState(null); //EXPLICAR HOOKS
+
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
-    const fetchProductDetails = async () => {
-      try {
-        const response = await fetch(`http://127.0.0.1:5000/products/${id}`);
-        if (!response.ok) {
-          throw new Error("Error al cargar los detalles del producto.");
-        }
-        const data = await response.json();
-        setProduct(data[0]);
-        console.log("PRODUCTO QUE QUIER VER---->", data[0]);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
+  const fetchProductDetails = async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:5000/products/${id}`);
+      if (!response.ok) {
+        throw new Error("Error al cargar los detalles del producto.");
       }
-    };
+      const data = await response.json();
+      setProduct(data[0]);
+      console.log("PRODUCTO QUE QUIER VER---->", data[0]);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
     fetchProductDetails();
   }, [id]);
@@ -61,7 +63,7 @@ const DetailsProducts = () => {
           prod.times = 1;
           cart.push(prod);
         }
-        // Ahora con el carrito actualizado vamos a meterlo dentro del endopint correspodiente
+        // Ahora con el carrito actualizado vamos a meterlo dentro del endpoint correspodiente
         // para que actulice el campo del usuario
         try {
           await fetch(`http://127.0.0.1:5000/cart/${userId}`, {

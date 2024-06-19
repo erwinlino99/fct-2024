@@ -10,7 +10,7 @@ connection=MySQL(app)
 
 @app.route('/')
 def index():
-    return "API DE ERWIN"
+    return "API DE ERWIN FUNCIONA"
 # PARA USUARIOS -->
 # PARA USUARIOS -->
 @app.route('/users',methods=['GET'])
@@ -40,7 +40,7 @@ def get_user(id):
 @app.route('/users', methods=['POST'])
 def add_user():
     try:
-        attribute = '[]'  # Asumiendo que wishlist y cart son listas iniciales vacías
+        attribute = '[]'
         user_data = request.json
         cursor = connection.connection.cursor()
         sql = "INSERT INTO users (username, password_hash, email, domicile, phone, bornDate, wishlist, cart) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
@@ -53,7 +53,7 @@ def add_user():
             user_data['bornDate'],attribute, attribute))
         connection.connection.commit()
         cursor.close()
-        return "Usuario agregado correctamente."
+        return "USUARIO AGREGADO"
     except Exception as e:
         return str(e)
 
@@ -81,7 +81,7 @@ def bringWishlist(id):
         cursor.execute(sql)
         result = cursor.fetchone()
         if result:
-            wishlist = json.loads(result[0])  # Convertir la cadena JSON en una lista de Python
+            wishlist = json.loads(result[0])
             return jsonify(wishlist)
         else:
             return "Usuario no encontrado"
@@ -123,12 +123,13 @@ def bringCart(id):
     except Exception as e:
         return str(e)
 
-
+# EXPLICAR ESTO 
 @app.route('/cart/<int:id>', methods=['PUT'])
 def updateCart(id):
     try:
         # Aqui recupero lo que el front me envia
         frontend_data = request.json
+        print(frontend_data)
         # lo transformo a un formato json y lo meto en columna correspondiente
         frontend_data_str = json.dumps(frontend_data)
         # Hago conexion a la BBDD
@@ -140,7 +141,7 @@ def updateCart(id):
     except Exception as e:
         return str(e)
 
-# //! TRABAJANDO AQUI 
+# //! ME QUEDE AQUI 
 @app.route('/cart/<int:id>', methods=['DELETE'])
 def delete_cart(id):
     try:

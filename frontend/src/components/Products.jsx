@@ -22,7 +22,7 @@ const Products = () => {
       console.log("Error fetching products:", e);
     }
   };
-
+  //EXPLICAR --->
   const addFavorites = async (e, prod) => {
     e.stopPropagation();
     if (userId) {
@@ -36,7 +36,7 @@ const Products = () => {
         //Veo si el producto ya existe
         const isProductInWishlist = wish.some((item) => item.id === prod.id);
         if (!isProductInWishlist) {
-          // Si no exite lo insertamos en al lista recupera y lo actulzamos en la BBD
+          // Si NO exite lo insertamos en la lista,lo agregamos y actualizamos en la BBD
           wish.push(prod);
           try {
             await fetch(`http://127.0.0.1:5000/wishlist/${userId}`, {
